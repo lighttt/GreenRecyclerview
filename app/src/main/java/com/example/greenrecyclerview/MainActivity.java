@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int NUM_LIST_ITEMS = 100;
 
     private RecyclerView mNumbersList;
+    private GreenAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,5 +31,7 @@ public class MainActivity extends AppCompatActivity {
         mNumbersList.setHasFixedSize(true);
 
         //create adapter for displaying each item in the list:
+        mAdapter = new GreenAdapter(NUM_LIST_ITEMS);
+        mNumbersList.setAdapter(mAdapter);
     }
 }
