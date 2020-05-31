@@ -11,4 +11,14 @@
         android:textSize="42sp"
         android:text="#42"/>
 
+    <TextView
+        android:id="@+id/tv_view_holder_instance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:layout_gravity="center_vertical|end"
+        android:fontFamily="monospace"
+        android:textColor="#000"
+        android:text="ViewHolder instance: 7"/>
+
 </FrameLayout>

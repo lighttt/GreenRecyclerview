@@ -17,8 +17,13 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
     //list of items on rv
     private int mNumberItems;
 
+    //count view holder numbers
+    private  static int viewHolderCount;
+
     public GreenAdapter(int numberOfItems) {
         mNumberItems = numberOfItems;
+        //when a new adapter is created
+        viewHolderCount = 0;
     }
 
     @NonNull
@@ -30,6 +35,13 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
 
         View view = inflater.inflate(layoutIdForListItem, viewGroup, false);
         NumberViewHolder viewHolder = new NumberViewHolder(view);
+        viewHolder.viewHolderIndex.setText("Viewholder index: " + viewHolderCount);
+
+        int backgroundColorForViewHolder = ColorUtils.getViewHolderBackgroundColorFromInstance(context,viewHolderCount);
+        viewHolder.itemView.setBackgroundColor(backgroundColorForViewHolder);
+
+        viewHolderCount++;
+        Log.e(TAG, "onCreateViewHolder:number of viewholders created " +viewHolderCount );
         return viewHolder;
     }
 
@@ -47,10 +59,12 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
     class NumberViewHolder extends RecyclerView.ViewHolder {
 
         TextView listItemNumberView;
+        TextView viewHolderIndex;
 
         public NumberViewHolder(@NonNull View itemView) {
             super(itemView);
             listItemNumberView = itemView.findViewById(R.id.tv_item_number);
+            viewHolderIndex = itemView.findViewById(R.id.tv_view_holder_instance);
         }
 
         void bind(int listIndex) {
