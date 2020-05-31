@@ -8,13 +8,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GreenAdapter.ListItemClickListener {
 
     private static final int NUM_LIST_ITEMS = 100;
 
     private RecyclerView mNumbersList;
     private GreenAdapter mAdapter;
+    private Toast mToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         mNumbersList.setHasFixedSize(true);
 
         //create adapter for displaying each item in the list:
-        mAdapter = new GreenAdapter(NUM_LIST_ITEMS);
+        mAdapter = new GreenAdapter(NUM_LIST_ITEMS,this);
         mNumbersList.setAdapter(mAdapter);
     }
 
@@ -55,11 +57,23 @@ public class MainActivity extends AppCompatActivity {
         switch (itemId)
         {
             case R.id.action_refresh:
-                mAdapter = new GreenAdapter(NUM_LIST_ITEMS);
+                mAdapter = new GreenAdapter(NUM_LIST_ITEMS,this);
                 mNumbersList.setAdapter(mAdapter);
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onListItemClick(int clickedItemIndex) {
+        if(mToast!=null)
+        {
+            mToast.cancel();
+        }
+
+        String toastMessage = "Item #" +clickedItemIndex + " clicked";
+        mToast = Toast.makeText(this,toastMessage,Toast.LENGTH_LONG);
+        mToast.show();
     }
 }

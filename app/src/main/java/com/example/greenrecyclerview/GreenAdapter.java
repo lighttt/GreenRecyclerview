@@ -20,10 +20,20 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
     //count view holder numbers
     private  static int viewHolderCount;
 
-    public GreenAdapter(int numberOfItems) {
+    //item click
+   final private ListItemClickListener mOnClickListener;
+
+
+    public GreenAdapter(int numberOfItems,ListItemClickListener itemClickListener) {
         mNumberItems = numberOfItems;
         //when a new adapter is created
         viewHolderCount = 0;
+        mOnClickListener = itemClickListener;
+    }
+
+    //interface receives click messages
+    public interface ListItemClickListener{
+        void onListItemClick(int clickedItemIndex);
     }
 
     @NonNull
@@ -56,7 +66,7 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
         return mNumberItems;
     }
 
-    class NumberViewHolder extends RecyclerView.ViewHolder {
+    class NumberViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView listItemNumberView;
         TextView viewHolderIndex;
@@ -65,10 +75,17 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
             super(itemView);
             listItemNumberView = itemView.findViewById(R.id.tv_item_number);
             viewHolderIndex = itemView.findViewById(R.id.tv_view_holder_instance);
+            itemView.setOnClickListener(this);
         }
 
         void bind(int listIndex) {
             listItemNumberView.setText(String.valueOf(listIndex));
+        }
+
+        @Override
+        public void onClick(View view) {
+            int clickedPosition = getAdapterPosition();
+            mOnClickListener.onListItemClick(clickedPosition);
         }
     }
 }
